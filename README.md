@@ -48,6 +48,7 @@ The `pod` query is a regular expression so you could provide `"web-\w"` to tail
 
 | flag                 | default          | purpose                                                                                                      |
 |----------------------|------------------|--------------------------------------------------------------------------------------------------------------|
+| `--exclude-pod`      |                  | Pods to exclude when tailing logs                                                                            |
 | `--container`        | `.*`             | Container name when multiple containers in pod (regular expression)                                          |
 | `--exclude-container`|                  | Container name to exclude when multiple containers in pod (regular expression)                               |
 | `--container-state`  | `running`        | Tail containers with status in running, waiting or terminated. Default to running.                           |
