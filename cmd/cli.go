@@ -55,6 +55,7 @@ type Options struct {
 	completion       string
 	template         string
 	output           string
+	excludePod       string
 }
 
 var opts = &Options{
@@ -71,6 +72,7 @@ func Run() {
 	cmd.Use = "stern pod-query"
 	cmd.Short = "Tail multiple pods and containers from Kubernetes"
 
+	cmd.Flags().StringVarP(&opts.excludePod, "exclude-pod", "x", opts.excludePod, "Exclude pods matching this regular expression")
 	cmd.Flags().StringVarP(&opts.container, "container", "c", opts.container, "Container name when multiple containers in pod")
 	cmd.Flags().StringVarP(&opts.excludeContainer, "exclude-container", "E", opts.excludeContainer, "Exclude a Container name")
 	cmd.Flags().StringVar(&opts.containerState, "container-state", opts.containerState, "If present, tail containers with status in running, waiting or terminated. Default to running.")
@@ -157,6 +159,14 @@ func parseConfig(args []string) (*stern.Config, error) {
 	pod, err := regexp.Compile(podQuery)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to compile regular expression from query")
+	}
+
+	var excludePod *regexp.Regexp
+	if opts.excludePod != "" {
+		excludePod, err = regexp.Compile(opts.excludePod)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to compile regular expression for exclude pod query")
+		}
 	}
 
 	container, err := regexp.Compile(opts.container)
@@ -259,6 +269,7 @@ func parseConfig(args []string) (*stern.Config, error) {
 	return &stern.Config{
 		KubeConfig:            kubeConfig,
 		PodQuery:              pod,
+		ExcludePodQuery:       excludePod,
 		ContainerQuery:        container,
 		ExcludeContainerQuery: excludeContainer,
 		ContainerState:        containerState,

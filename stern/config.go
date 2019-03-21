@@ -28,6 +28,7 @@ type Config struct {
 	ContextName           string
 	Namespace             string
 	PodQuery              *regexp.Regexp
+	ExcludePodQuery       *regexp.Regexp
 	Timestamps            bool
 	ContainerQuery        *regexp.Regexp
 	ExcludeContainerQuery *regexp.Regexp
