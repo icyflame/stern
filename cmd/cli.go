@@ -72,7 +72,7 @@ func Run() {
 	cmd.Use = "stern pod-query"
 	cmd.Short = "Tail multiple pods and containers from Kubernetes"
 
-	cmd.Flags().StringVarP(&opts.excludePod, "exclude-pod", "x", opts.excludePod, "Exclude pods matching this regular expression")
+	cmd.Flags().StringVarP(&opts.excludePod, "exclude-pod", "v", opts.excludePod, "Exclude pods matching this regular expression")
 	cmd.Flags().StringVarP(&opts.container, "container", "c", opts.container, "Container name when multiple containers in pod")
 	cmd.Flags().StringVarP(&opts.excludeContainer, "exclude-container", "E", opts.excludeContainer, "Exclude a Container name")
 	cmd.Flags().StringVar(&opts.containerState, "container-state", opts.containerState, "If present, tail containers with status in running, waiting or terminated. Default to running.")
@@ -88,7 +88,7 @@ func Run() {
 	cmd.Flags().StringVarP(&opts.selector, "selector", "l", opts.selector, "Selector (label query) to filter on. If present, default to \".*\" for the pod-query.")
 	cmd.Flags().Int64Var(&opts.tail, "tail", opts.tail, "The number of lines from the end of the logs to show. Defaults to -1, showing all logs.")
 	cmd.Flags().StringVar(&opts.color, "color", opts.color, "Color output. Can be 'always', 'never', or 'auto'")
-	cmd.Flags().BoolVarP(&opts.version, "version", "v", opts.version, "Print the version and exit")
+	cmd.Flags().BoolVarP(&opts.version, "version", "", opts.version, "Print the version and exit")
 	cmd.Flags().StringVar(&opts.completion, "completion", opts.completion, "Outputs stern command-line completion code for the specified shell. Can be 'bash' or 'zsh'")
 	cmd.Flags().StringVar(&opts.template, "template", opts.template, "Template to use for log lines, leave empty to use --output flag")
 	cmd.Flags().StringVarP(&opts.output, "output", "o", opts.output, "Specify predefined template. Currently support: [default, raw, json]")
